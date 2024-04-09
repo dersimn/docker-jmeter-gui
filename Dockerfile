@@ -39,5 +39,9 @@ COPY startapp.sh /startapp.sh
 # Set the name of the application.
 RUN set-cont-env APP_NAME "JMeter"
 
+# Generate and install favicons.
+RUN APP_ICON_URL=https://jmeter.apache.org/images/favicon.png && \
+    install_app_icon.sh "$APP_ICON_URL"
+
 # Define mountable directories.
 VOLUME ["/output"]
