@@ -33,9 +33,6 @@ RUN cp /usr/share/zoneinfo/Europe/Berlin /etc/localtime \
 
 COPY --from=jmeter /opt/jmeter /opt/jmeter
 
-# Copy the start script.
-COPY startapp.sh /startapp.sh
-
 # Set the name of the application.
 RUN set-cont-env APP_NAME "JMeter"
 
@@ -45,3 +42,6 @@ RUN APP_ICON_URL=https://jmeter.apache.org/images/favicon.png && \
 
 # Define mountable directories.
 VOLUME ["/output"]
+
+# Copy the start script.
+COPY startapp.sh /startapp.sh
