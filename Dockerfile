@@ -45,6 +45,3 @@ VOLUME ["/output"]
 
 # Copy the start script.
 COPY startapp.sh /startapp.sh
-
-# Set /config/jmeter as dir for java.util.prefs
-ENV JVM_ARGS="-Djava.util.prefs.userRoot=/config/jmeter"
