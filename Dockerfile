@@ -23,16 +23,11 @@ RUN curl -L https://jmeter.apache.org/images/favicon.png > /icon.png
 
 FROM jlesage/baseimage-gui:alpine-3.19-v4
 
-RUN add-pkg \
-        java-common \
-        openjdk21-jre \
-        ttf-dejavu
-
+# Timezone
 RUN cp /usr/share/zoneinfo/Europe/Berlin /etc/localtime \
     && echo "Europe/Berlin" >  /etc/timezone
 
-COPY --from=jmeter /opt/jmeter /opt/jmeter
-
+# Cosmetics
 # Set the name of the application.
 RUN set-cont-env APP_NAME "JMeter"
 
@@ -40,8 +35,17 @@ RUN set-cont-env APP_NAME "JMeter"
 RUN APP_ICON_URL=https://jmeter.apache.org/images/favicon.png && \
     install_app_icon.sh "$APP_ICON_URL"
 
-# Define mountable directories.
-VOLUME ["/output"]
+# Packages
+RUN add-pkg \
+        java-common \
+        openjdk21-jre \
+        ttf-dejavu
+
+# JMeter
+COPY --from=jmeter /opt/jmeter /opt/jmeter
 
 # Copy the start script.
 COPY startapp.sh /startapp.sh
+
+# Define mountable directories.
+VOLUME ["/config"]
